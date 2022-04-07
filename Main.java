@@ -1,9 +1,9 @@
-import Day3.Day3;
+import Day4.Day4;
 
 import java.io.IOException;
 
 public class Main {
     public static void main (String [] args) throws IOException {
-        Day3.solution_3();
+        Day4.solution_1();
     }
 }
