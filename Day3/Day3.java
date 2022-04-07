@@ -39,4 +39,31 @@ public class Day3 {
             System.out.println("Неизвестная страна");
         }
     }
+
+    static public void solution_2() {
+        Scanner scan = new Scanner(System.in);
+        final double eps = 1e-9;
+        while (true) {
+            double a = scan.nextDouble();
+            double b = scan.nextDouble();
+            if (Math.abs(b) < eps) break;
+            System.out.println(a / b);
+        }
+    }
+
+    static public void solution_3() {
+        final int COUNT_ITERATION = 5;
+        Scanner scan = new Scanner(System.in);
+        final double eps = 1e-9;
+
+        for (int i = 0; i < COUNT_ITERATION; i++) {
+            double first = scan.nextDouble();
+            double second = scan.nextDouble();
+            if (Math.abs(second) < eps) {
+                System.out.println("Деление на 0");
+                continue;
+            }
+            System.out.println(first / second);
+        }
+    }
 }
