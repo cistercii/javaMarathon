@@ -1,9 +1,13 @@
-import Day4.Day4;
+import Day5.Day5;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
-    public static void main (String [] args) throws IOException {
-        Day4.solution_4();
+    public static void main (String [] args) throws FileNotFoundException {
+        Day5.solution_2();
     }
 }
