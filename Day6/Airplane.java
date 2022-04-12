@@ -15,10 +15,10 @@ public class Airplane {
         this.weight = weight;
     }
 
-    public void info() {
+    public String info() {
         String out = "Изготовитель: " + producer + ", год выпуска: " + year + ", длина: " + length
                 + ", вес: " + weight + ", кол-во топлива в баке: " + fuel;
-        System.out.println(out);
+        return out;
     }
 
     public void fillUp(double fuel_up) {
@@ -40,5 +40,10 @@ public class Airplane {
     static public void compareAirplanes (Airplane air1, Airplane air2) {
         Airplane tmp = air1.length > air2.length ? air1 : air2;
         System.out.println("Самолет марки " + tmp.producer + " длиннее");
+    }
+
+    @Override
+    public String toString() {
+        return this.info();
     }
 }

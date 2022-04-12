@@ -21,12 +21,12 @@ public class Day6 {
 
     static public void solution_2() {
         Airplane air = new Airplane("Boeing", 2010, 20.0, 4000.0);
-        air.info();
+        System.out.println(air.info());
         air.setYear(2012);
         air.setLength(25.0);
         air.fillUp(10.0);
         air.fillUp(20.0);
-        air.info();
+        System.out.println(air.info());
     }
 
     static public void solution_3() {
