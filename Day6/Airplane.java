@@ -36,4 +36,9 @@ public class Airplane {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+    static public void compareAirplanes (Airplane air1, Airplane air2) {
+        Airplane tmp = air1.length > air2.length ? air1 : air2;
+        System.out.println("Самолет марки " + tmp.producer + " длиннее");
+    }
 }
