@@ -3,10 +3,10 @@ package Day5;
 public class Motorbike {
 
     private final String color;
-    private final String year;
+    private final int year;
     private final String model;
 
-    public Motorbike(String color, String year, String model) {
+    public Motorbike(String color, int year, String model) {
         this.color = color;
         this.year = year;
         this.model = model;
@@ -16,11 +16,19 @@ public class Motorbike {
         return color;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
     public String getModel() {
         return model;
+    }
+
+    public void info() {
+        System.out.println("Это мотоцикл");
+    }
+
+    public int yearDifference (int year_diff) {
+        return year_diff - this.year;
     }
 }

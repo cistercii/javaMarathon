@@ -6,7 +6,7 @@ public class Day5 {
         Car car = new Car();
 
         car.setColor("Red");
-        car.setYear("2021");
+        car.setYear(2021);
         car.setModel("Renault");
 
         System.out.println(car.getColor());
@@ -15,10 +15,10 @@ public class Day5 {
     }
 
     static public void solution_2() {
-        Motorbike motrbike = new Motorbike("Red", "2012", "BMW");
+        Motorbike motorbike = new Motorbike("Red", 2012, "BMW");
 
-        System.out.println(motrbike.getColor());
-        System.out.println(motrbike.getYear());
-        System.out.println(motrbike.getModel());
+        System.out.println(motorbike.getColor());
+        System.out.println(motorbike.getYear());
+        System.out.println(motorbike.getModel());
     }
 }
