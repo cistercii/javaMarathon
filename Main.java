@@ -1,5 +1,4 @@
-import Day10.Day10;
-import Day9.Day9;
+import Day11.Day11;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +8,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main (String [] args) throws FileNotFoundException {
-        Day10.solution();
+        Day11.solution();
     }
 }

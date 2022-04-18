@@ -18,7 +18,7 @@ public class Day10 {
         tree.add(3);
         tree.add(150);
 
-        int [] values = {1, 19, 50, 36};
+        int[] values = {1, 19, 50, 36};
         tree.add(values);
         tree.PrintFromLessToMore();
     }
