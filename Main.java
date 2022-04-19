@@ -9,6 +9,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main (String [] args) throws FileNotFoundException {
-        Day12.solution_2();
+        Day12.solution_4_5();
     }
 }

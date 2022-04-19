@@ -1,5 +1,7 @@
 package Day12;
 
+import Day12.Task3.MusicArtist;
+import Day12.Task3.MusicBand;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -28,6 +30,37 @@ public class Day12 {
             }
         }
         printList(list);
+    }
+
+    static public void solution_3() {
+        List<MusicBand> list = new ArrayList<>();
+        list.add(new MusicBand("Йорш", 2006));
+        list.add(new MusicBand("Limp Bizkit", 1994));
+        list.add(new MusicBand("Порнофильмы", 2008));
+        list.add(new MusicBand("System of a down", 1992));
+        list.add(new MusicBand("njdch", 1995));
+        list.add(new MusicBand("sbhcbhcw", 2010));
+        list.add(new MusicBand("quwncnw", 2001));
+        list.add(new MusicBand("jcsnajcnjnw", 2000));
+        printList(list);
+        System.out.println("");
+        List<MusicBand> new_list = MusicBand.groupAfter2000(list);
+        printList(new_list);
+    }
+
+    static public void solution_4_5() {
+        MusicBand musicBand = new MusicBand("asjncsacn", 2001);
+        musicBand.addMember(new MusicArtist("Harry", 20));
+        musicBand.addMember(new MusicArtist("Bob", 19));
+        musicBand.addMember(new MusicArtist("Bill", 29));
+        musicBand.printMembers();
+
+        MusicBand musicBand_second = new MusicBand("cnjajcn", 1996);
+        musicBand_second.addMember(new MusicArtist("Timmy", 23));
+        musicBand_second.addMember(new MusicArtist("Ken", 30));
+
+        MusicBand.transferMembers(musicBand_second, musicBand);
+        musicBand.printMembers();
     }
 
     static private <T> void  printList (@NotNull List<T> list) {
