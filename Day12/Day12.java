@@ -36,7 +36,7 @@ public class Day12 {
         List<MusicBand> list = new ArrayList<>();
         list.add(new MusicBand("Йорш", 2006));
         list.add(new MusicBand("Limp Bizkit", 1994));
-        list.add(new MusicBand("Порнофильмы", 2008));
+        list.add(new MusicBand("Пилот", 2008));
         list.add(new MusicBand("System of a down", 1992));
         list.add(new MusicBand("njdch", 1995));
         list.add(new MusicBand("sbhcbhcw", 2010));
