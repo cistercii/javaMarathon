@@ -28,16 +28,20 @@ public class Teacher {
     }
 
     private enum Evalution {
-        Unsatisfactory,
-        Satisfactory,
-        Nicely,
-        Excellent;
+        Unsatisfactory("Неудовлетворительно"),
+        Satisfactory("Удовлетворительно"),
+        Nicely("Хорошо"),
+        Excellent("Отлично");
 
-        private String [] evalution = {"Неудовлетворительно", "Удовлетворительно", "Хорошо", "Отлично"};
+        private final String evalution;
+
+        private Evalution(String evalution) {
+            this.evalution = evalution;
+        }
 
         @Override
         public String toString() {
-            return evalution[ordinal()];
+            return evalution;
         }
     };
 }
