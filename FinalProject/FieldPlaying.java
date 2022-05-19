@@ -1,46 +1,106 @@
 package FinalProject;
 
+import FinalProject.Exceptions.BadCoordsException;
+import FinalProject.Exceptions.BadFormatException;
+import FinalProject.Exceptions.BadInputDataException;
 import FinalProject.Ship.Ship;
+import FinalProject.Ship.ShipType;
 import FinalProject.Ship.SizeDecks;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.PrintStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class FieldPlaying {
 
     private static final int SIZE_FIELD = 10;
-    public static final int MAX_VERTICAL_NUMBER = 10;
-    public static final int MIN_VERTICAL_NUMBER = 1;
+    private static final int MAX_VERTICAL_INDEX = 9;
+    private static final int MIN_VERTICAL_INDEX = 0;
+    private static final int COUNT_SHIP = 10;
+    public int counter_ships = 0;
+
+    private static final FieldPlaying empty_field = new FieldPlaying();
+
+    public static FieldPlaying getEmpty() {
+        return empty_field;
+    }
 
     public static List<Character> horizontal_coords =
             new ArrayList<>(Arrays.asList('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К'));
 
-    String [][] field = new String[SIZE_FIELD][SIZE_FIELD];
+    private final Symbol [][] field = new Symbol [SIZE_FIELD][SIZE_FIELD];
+
+    private final List<Ship> ships = new ArrayList<>(COUNT_SHIP);
 
     public FieldPlaying() {
         for (int i = 0; i < SIZE_FIELD; i++) {
             for (int j = 0; j < SIZE_FIELD; j++) {
-                field[i][j] = Symbol.EmptyField.toString() + ' ';
+                field[i][j] = Symbol.EmptyField;
             }
         }
     }
 
-    public boolean addSymbol (char horizontal, int vertical, Symbol symbol) {
-        int horizontal_index = horizontal_coords.indexOf(horizontal);
-        if (horizontal_index == -1 || vertical > MAX_VERTICAL_NUMBER || vertical < MIN_VERTICAL_NUMBER) {
-            System.out.println("Еrror");
-            return false;
+    public void addSymbol (Coords coords, Symbol symbol) {
+        int horizontal_index = horizontal_coords.indexOf(coords.getHorizontal());
+        if (horizontal_index == -1) {
+            return;
         }
-        field[vertical - 1][horizontal_index] = symbol.toString() + " ";
-        return true;
+        field[coords.getVertical() - 1][horizontal_index] = symbol;
     }
 
-    public void addShip (SizeDecks numberDecks, String str_coords) throws BadFormatException {
+    public void addShip (SizeDecks numberDecks, String str_coords) throws BadInputDataException {
         Ship ship = new Ship(numberDecks, str_coords);
         for(Coords coords : ship.getCoords_list()) {
-            addSymbol(coords.getHorizontal(), coords.getVertical(), Symbol.Ship);
+            int horizontal_crd = horizontal_coords.indexOf(coords.getHorizontal()); // Правильность координаты проверена ранее
+            if (field[coords.getVertical() - 1][horizontal_crd]
+                    .equals(Symbol.UnavailableField)) throw new BadCoordsException();
+            addSymbol(coords, Symbol.Ship);
         }
+        ships.add(counter_ships++, ship);
+        addUnavailable(ship);
+    }
+
+    public void addUnavailable(@NotNull Ship ship) {
+        ship.getCoords_list().forEach(this::addUnavailableField);
+    }
+
+    private void addUnavailableField(@NotNull Coords coords) {
+        addSymbolsUnavailable(coords.getVertical() - 2, horizontal_coords.indexOf(coords.getHorizontal()) - 1);
+        addSymbolsUnavailable(coords.getVertical() - 1, horizontal_coords.indexOf(coords.getHorizontal()) - 1);
+        addSymbolsUnavailable(coords.getVertical(), horizontal_coords.indexOf(coords.getHorizontal()) - 1);
+        addSymbolsUnavailable(coords.getVertical(), horizontal_coords.indexOf(coords.getHorizontal()));
+        addSymbolsUnavailable(coords.getVertical() - 2, horizontal_coords.indexOf(coords.getHorizontal()));
+        addSymbolsUnavailable(coords.getVertical() - 2, horizontal_coords.indexOf(coords.getHorizontal()) + 1);
+        addSymbolsUnavailable(coords.getVertical() - 1, horizontal_coords.indexOf(coords.getHorizontal()) + 1);
+        addSymbolsUnavailable(coords.getVertical(), horizontal_coords.indexOf(coords.getHorizontal()) + 1);
+    }
+
+    private void addSymbolsUnavailable(int index1, int index2) {
+        if (index1 < MIN_VERTICAL_INDEX || index1 > MAX_VERTICAL_INDEX ||
+                index2 < MIN_VERTICAL_INDEX || index2 > MAX_VERTICAL_INDEX) {
+            return;
+        }
+        if (field[index1][index2] != Symbol.EmptyField) return;
+        field[index1][index2] = Symbol.UnavailableField;
+    }
+
+    public Ship findShot(Coords coords_shot) {
+        List<Ship> target_ships = ships.stream()
+                .filter(x -> x.getCoords_list().contains(coords_shot))
+                .collect(Collectors.toList());
+        return (target_ships.size() != 0) ? target_ships.get(0) : null;
+
+    }
+
+    public boolean eraseShip(Ship ship) {
+        ships.remove(ship);
+        return ships.isEmpty();
     }
 
     public void print() {
@@ -78,20 +138,20 @@ public class FieldPlaying {
 
     private void printRow(int i) {
         for (int j = 0; j < SIZE_FIELD; j++) {
-            System.out.print(field[i][j]);
+            //PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+            //printStream.print(field[i][j] + " ");
+            System.out.print(field[i][j] + " ");
         }
     }
 
     static void  printHorizontalCoords () {
         for (char coords : horizontal_coords) {
+            //PrintStream printStream = new PrintStream(System.out, true, Charset.defaultCharset());
+            //printStream.print(coords + "  ");
             System.out.print(coords + "  ");
         }
     }
 
-    enum ShipType {
-        NoType,
-        Horizontal,
-        Vertical
-    }
+
 
 }

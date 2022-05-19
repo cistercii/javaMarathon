@@ -1,22 +1,18 @@
-import FinalProject.BadFormatException;
 import FinalProject.FieldPlaying;
+import FinalProject.Game;
+import FinalProject.Players.HumanPlayer;
+import FinalProject.Players.Player;
 import FinalProject.Ship.SizeDecks;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main {
-    public static void main (String [] args) throws FileNotFoundException {
-        FieldPlaying field1 = new FieldPlaying();
-        FieldPlaying field2 = new FieldPlaying();
-        String test = "А,10;А,10;В,1";
-        do {
-            try {
-                field1.addShip(SizeDecks.ThreeDecks, test);
-            } catch (BadFormatException e) {
-                System.out.println("Недопустимый формат");
-            }
-            break;
-        } while (true);
-        FieldPlaying.doublePrint(field1, field2);
+    public static void main (String [] args) throws IOException {
+        Player player1 = new HumanPlayer();
+        Player player2 = new HumanPlayer();
+        Game game = new Game(player1, player2);
+        game.start();
+        game.game_process();
     }
 }
