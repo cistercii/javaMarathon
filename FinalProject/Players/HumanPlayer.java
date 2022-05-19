@@ -5,7 +5,7 @@ import FinalProject.Exceptions.BadInputDataException;
 import FinalProject.FieldPlaying;
 import FinalProject.Ship.Ship;
 import FinalProject.Ship.SizeDecks;
-import FinalProject.Status_game;
+import FinalProject.StatusGame;
 import FinalProject.Symbol;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Status_game oneShot(@NotNull Player opponent) throws BadInputDataException {
+    public StatusGame oneShot(@NotNull Player opponent) throws BadInputDataException {
         System.out.println("Ввведите координаты стрельбы (формат: x,y)");
         Scanner scan = new Scanner(System.in, StandardCharsets.UTF_8);
         Coords shot = new Coords(scan.next());
@@ -50,12 +50,12 @@ public class HumanPlayer extends Player {
             if (ship.getIntact_decks() == 0) {
                 System.out.println("Корабль потоплен!");
                 opponent_field.addUnavailable(ship);
-                return opponent.yourself_field.eraseShip(ship) ? Status_game.END_GAME : Status_game.CURRENT_PLAYER_MOVE;
+                return opponent.yourself_field.eraseShip(ship) ? StatusGame.END_GAME : StatusGame.CURRENT_PLAYER_MOVE;
             } else {
-                return Status_game.CURRENT_PLAYER_MOVE;
+                return StatusGame.CURRENT_PLAYER_MOVE;
             }
         }
         System.out.println("Промах!");
-        return Status_game.NEXT_PLAYER_MOVE;
+        return StatusGame.NEXT_PLAYER_MOVE;
     }
 }

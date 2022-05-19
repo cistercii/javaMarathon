@@ -2,7 +2,7 @@ package FinalProject.Players;
 
 import FinalProject.Exceptions.BadInputDataException;
 import FinalProject.FieldPlaying;
-import FinalProject.Status_game;
+import FinalProject.StatusGame;
 
 public abstract class Player {
 
@@ -11,7 +11,7 @@ public abstract class Player {
 
     abstract public void fillYourselfField();
 
-    abstract public Status_game oneShot(Player opponent) throws BadInputDataException;
+    abstract public StatusGame oneShot(Player opponent) throws BadInputDataException;
 
     public FieldPlaying getYourself_field() {
         return yourself_field;

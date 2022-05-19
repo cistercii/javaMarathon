@@ -54,7 +54,7 @@ public class Game {
         FieldPlaying.doublePrint(FieldPlaying.getEmpty(), FieldPlaying.getEmpty());
         int current_player_number = first_move();
         int i = 0;
-        Status_game status = Status_game.NEXT_PLAYER_MOVE;
+        StatusGame status = StatusGame.NEXT_PLAYER_MOVE;
         while (true) {
             Player current = current_player_number == 1 ? player1 : player2;
             System.out.println("Ходит игрок номер " + current_player_number);
@@ -63,8 +63,8 @@ public class Game {
             do {
                 FieldPlaying.doublePrint(current.getYourself_field(), current.getOpponent_field());
                 status = nextMove(current_player_number);
-            } while (status == Status_game.CURRENT_PLAYER_MOVE);
-            if (status == Status_game.END_GAME) break;
+            } while (status == StatusGame.CURRENT_PLAYER_MOVE);
+            if (status == StatusGame.END_GAME) break;
             FieldPlaying.doublePrint(current.getYourself_field(), current.getOpponent_field());
             print_next_move();
             FieldPlaying.doublePrint(FieldPlaying.getEmpty(), FieldPlaying.getEmpty());
@@ -74,8 +74,8 @@ public class Game {
         System.out.println("Игра окончена! Игрок " + current_player_number + " победил");
     }
 
-    private Status_game nextMove (int current_player) {
-        Status_game status;
+    private StatusGame nextMove (int current_player) {
+        StatusGame status;
         do {
             try {
                 if (current_player == 1) {
@@ -85,10 +85,10 @@ public class Game {
                 }
             } catch (BadInputDataException e) {
                 System.out.println(e.getMessage());
-                status = Status_game.ERROR_COORDS;
+                status = StatusGame.ERROR_COORDS;
             }
             break;
-        } while(status == Status_game.ERROR_COORDS);
+        } while(status == StatusGame.ERROR_COORDS);
         return status;
     }
 

@@ -1,6 +1,6 @@
 package FinalProject;
 
-public enum Status_game {
+public enum StatusGame {
     ERROR_COORDS,
     CURRENT_PLAYER_MOVE,
     NEXT_PLAYER_MOVE,

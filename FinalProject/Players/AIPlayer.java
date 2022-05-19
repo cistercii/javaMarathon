@@ -1,6 +1,6 @@
 package FinalProject.Players;
 
-import FinalProject.Status_game;
+import FinalProject.StatusGame;
 
 // TODO Потом нужно будет запилить, сейчас нету
 public class AIPlayer extends Player {
@@ -10,7 +10,7 @@ public class AIPlayer extends Player {
     }
 
     @Override
-    public Status_game oneShot(Player opponent) {
-        return Status_game.END_GAME;
+    public StatusGame oneShot(Player opponent) {
+        return StatusGame.END_GAME;
     }
 }
