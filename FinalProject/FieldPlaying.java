@@ -111,7 +111,7 @@ public class FieldPlaying {
             String add_space = (i == SIZE_FIELD - 1) ? " " : "  ";
             System.out.print((i + 1) + add_space);
             for (int j = 0; j < SIZE_FIELD; j++) {
-                System.out.print(field[i][j]);
+                System.out.print(field[i][j] + " ");
             }
             System.out.println();
         }

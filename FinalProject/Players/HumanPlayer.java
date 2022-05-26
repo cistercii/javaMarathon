@@ -19,7 +19,7 @@ public class HumanPlayer extends Player {
         for (SizeDecks ship_group : SizeDecks.values()) { // По кол-ву палуб
             for (int i = 0; i < ship_group.getCount_ships(); i++) { // По кол-ву кораблей
                 do {
-                    FieldPlaying.doublePrint(getYourself_field(), getOpponent_field());
+                    getYourself_field().print();
                     System.out.println("Введите координаты корабля (формат x1,y1;...): " + ship_group.getName());
                     String str = scan.next();
                     try {
