@@ -138,17 +138,14 @@ public class FieldPlaying {
 
     private void printRow(int i) {
         for (int j = 0; j < SIZE_FIELD; j++) {
-            //PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8);
-            //printStream.print(field[i][j] + " ");
             System.out.print(field[i][j] + " ");
         }
     }
 
     static void  printHorizontalCoords () {
         for (char coords : horizontal_coords) {
-            //PrintStream printStream = new PrintStream(System.out, true, Charset.defaultCharset());
-            //printStream.print(coords + "  ");
-            System.out.print(coords + "  ");
+            // За символами Юникода пробелы, для правильного отображения на любой ОС
+            System.out.print(coords + "\u2002\u2004");
         }
     }
 
