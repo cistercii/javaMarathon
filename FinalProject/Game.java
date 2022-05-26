@@ -50,11 +50,11 @@ public class Game {
         return first;
     }
 
-    public void game_process () throws IOException {
+    public void game_process () {
         FieldPlaying.doublePrint(FieldPlaying.getEmpty(), FieldPlaying.getEmpty());
         int current_player_number = first_move();
         int i = 0;
-        StatusGame status = StatusGame.NEXT_PLAYER_MOVE;
+        StatusGame status;
         while (true) {
             Player current = current_player_number == 1 ? player1 : player2;
             System.out.println("Ходит игрок номер " + current_player_number);
