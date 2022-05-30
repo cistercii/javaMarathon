@@ -3,10 +3,9 @@ package FinalProject.Players;
 import FinalProject.Coords;
 import FinalProject.Exceptions.BadInputDataException;
 import FinalProject.FieldPlaying;
+import FinalProject.Game;
 import FinalProject.Ship.Ship;
 import FinalProject.Ship.SizeDecks;
-import FinalProject.StatusGame;
-import FinalProject.Symbol;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
@@ -34,28 +33,28 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public StatusGame oneShot(@NotNull Player opponent) throws BadInputDataException {
+    public Game.StatusGame oneShot(@NotNull Player opponent) throws BadInputDataException {
         System.out.println("Ввведите координаты стрельбы (формат: x,y)");
         Scanner scan = new Scanner(System.in, StandardCharsets.UTF_8);
         Coords shot = new Coords(scan.next());
         Ship ship = opponent.yourself_field.findShot(shot);
         if (ship == null) {
-            opponent_field.addSymbol(shot, Symbol.Miss);
-            opponent.yourself_field.addSymbol(shot, Symbol.Miss);
+            opponent_field.addSymbol(shot, FieldPlaying.Symbol.Miss);
+            opponent.yourself_field.addSymbol(shot, FieldPlaying.Symbol.Miss);
         } else {
             ship.hit();
-            opponent_field.addSymbol(shot, Symbol.Hit);
-            opponent.yourself_field.addSymbol(shot, Symbol.Hit);
+            opponent_field.addSymbol(shot, FieldPlaying.Symbol.Hit);
+            opponent.yourself_field.addSymbol(shot, FieldPlaying.Symbol.Hit);
             System.out.println("Попадание!");
             if (ship.getIntact_decks() == 0) {
                 System.out.println("Корабль потоплен!");
                 opponent_field.addUnavailable(ship);
-                return opponent.yourself_field.eraseShip(ship) ? StatusGame.END_GAME : StatusGame.CURRENT_PLAYER_MOVE;
+                return opponent.yourself_field.eraseShip(ship) ? Game.StatusGame.END_GAME : Game.StatusGame.CURRENT_PLAYER_MOVE;
             } else {
-                return StatusGame.CURRENT_PLAYER_MOVE;
+                return Game.StatusGame.CURRENT_PLAYER_MOVE;
             }
         }
         System.out.println("Промах!");
-        return StatusGame.NEXT_PLAYER_MOVE;
+        return Game.StatusGame.NEXT_PLAYER_MOVE;
     }
 }

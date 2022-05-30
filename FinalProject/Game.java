@@ -4,6 +4,7 @@ import FinalProject.Exceptions.BadInputDataException;
 import FinalProject.Players.Player;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.Scanner;
@@ -34,7 +35,7 @@ public class Game {
 
     private void sleep (long sec) {
         try {
-            TimeUnit.SECONDS.sleep(sec); // Ждем секунду для эффекта
+            TimeUnit.SECONDS.sleep(sec);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -74,8 +75,8 @@ public class Game {
         System.out.println("Игра окончена! Игрок " + current_player_number + " победил");
     }
 
-    private StatusGame nextMove (int current_player) {
-        StatusGame status;
+    private Game.StatusGame nextMove (int current_player) {
+        Game.StatusGame status;
         do {
             try {
                 if (current_player == 1) {
@@ -101,5 +102,12 @@ public class Game {
     private void shift_console() {
         System.out.println("\n\n");
         System.out.flush();
+    }
+
+    public enum StatusGame {
+        ERROR_COORDS,
+        CURRENT_PLAYER_MOVE,
+        NEXT_PLAYER_MOVE,
+        END_GAME;
     }
 }

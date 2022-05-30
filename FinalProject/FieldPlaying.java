@@ -1,20 +1,14 @@
 package FinalProject;
 
 import FinalProject.Exceptions.BadCoordsException;
-import FinalProject.Exceptions.BadFormatException;
 import FinalProject.Exceptions.BadInputDataException;
 import FinalProject.Ship.Ship;
-import FinalProject.Ship.ShipType;
 import FinalProject.Ship.SizeDecks;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.PrintStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class FieldPlaying {
@@ -149,6 +143,43 @@ public class FieldPlaying {
         }
     }
 
+    public static enum Symbol {
 
+        EmptyField("\u2B1C"),       // Пустое поле
+        UnavailableField("\u2B1B"), // Недоступное поле
+        Ship("\u26F5"),              // Корабль
+        Hit("\uD83D\uDD25"),         // Попадание
+        Miss("\u274C");             // Промах
 
+        private final String unicode;
+
+        private Symbol(String unicode) {
+            this.unicode = unicode;
+        }
+
+        @Override
+        public String toString() {
+            return this.unicode;
+        }
+    }
+
+    private static class Cell {
+        Symbol symbol;
+        Visibility visibility;
+
+        public Cell(Symbol symbol) {
+            this.symbol = symbol;
+            this.visibility = Visibility.INVISIBLE;
+        }
+
+        @Override
+        public String toString() {
+            return symbol.toString();
+        }
+    }
+
+}
+enum Visibility {
+    VISIBLE,
+    INVISIBLE
 }
