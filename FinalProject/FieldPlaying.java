@@ -19,23 +19,25 @@ public class FieldPlaying {
     private static final int COUNT_SHIP = 10;
     public int counter_ships = 0;
 
-    private static final FieldPlaying empty_field = new FieldPlaying();
-
-    public static FieldPlaying getEmpty() {
-        return empty_field;
-    }
-
     public static List<Character> horizontal_coords =
             new ArrayList<>(Arrays.asList('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К'));
 
-    private final Symbol [][] field = new Symbol [SIZE_FIELD][SIZE_FIELD];
+    private final Cell [][] field = new Cell [SIZE_FIELD][SIZE_FIELD];
 
     private final List<Ship> ships = new ArrayList<>(COUNT_SHIP);
 
-    public FieldPlaying() {
-        for (int i = 0; i < SIZE_FIELD; i++) {
-            for (int j = 0; j < SIZE_FIELD; j++) {
-                field[i][j] = Symbol.EmptyField;
+    public FieldPlaying () {
+        for (int i = 0; i < SIZE_FIELD; ++i) {
+            for (int j = 0; j < SIZE_FIELD; ++j) {
+                field[i][j] = new Cell();
+            }
+        }
+    }
+
+    public void setAllVisible(Visibility visibility) {
+        for (var field_mas : field) {
+            for (var field : field_mas) {
+                field.setVisibility(visibility);
             }
         }
     }
@@ -45,14 +47,15 @@ public class FieldPlaying {
         if (horizontal_index == -1) {
             return;
         }
-        field[coords.getVertical() - 1][horizontal_index] = symbol;
+        field[coords.getVertical() - 1][horizontal_index].setSymbol(symbol);
+        field[coords.getVertical() - 1][horizontal_index].setVisibility(Visibility.VISIBLE);
     }
 
     public void addShip (SizeDecks numberDecks, String str_coords) throws BadInputDataException {
         Ship ship = new Ship(numberDecks, str_coords);
         for(Coords coords : ship.getCoords_list()) {
             int horizontal_crd = horizontal_coords.indexOf(coords.getHorizontal()); // Правильность координаты проверена ранее
-            if (field[coords.getVertical() - 1][horizontal_crd]
+            if (field[coords.getVertical() - 1][horizontal_crd].getSymbol()
                     .equals(Symbol.UnavailableField)) throw new BadCoordsException();
             addSymbol(coords, Symbol.Ship);
         }
@@ -80,8 +83,12 @@ public class FieldPlaying {
                 index2 < MIN_VERTICAL_INDEX || index2 > MAX_VERTICAL_INDEX) {
             return;
         }
-        if (field[index1][index2] != Symbol.EmptyField) return;
-        field[index1][index2] = Symbol.UnavailableField;
+        if (field[index1][index2].getSymbol() == Symbol.UnavailableField) {
+            field[index1][index2].setVisibility(Visibility.VISIBLE);
+            return;
+        }
+        if (field[index1][index2].getSymbol() != Symbol.EmptyField) return;
+        field[index1][index2].setSymbol(Symbol.UnavailableField);
     }
 
     public Ship findShot(Coords coords_shot) {
@@ -89,7 +96,6 @@ public class FieldPlaying {
                 .filter(x -> x.getCoords_list().contains(coords_shot))
                 .collect(Collectors.toList());
         return (target_ships.size() != 0) ? target_ships.get(0) : null;
-
     }
 
     public boolean eraseShip(Ship ship) {
@@ -112,18 +118,17 @@ public class FieldPlaying {
     }
 
     public static void doublePrint(FieldPlaying field1, FieldPlaying field2) {
-        final String space = "     ";
-        System.out.print("   ");
+        final String space = "   ";
+        System.out.print(space);
         printHorizontalCoords();
-        System.out.print(space); // Пропуск между полями
-        System.out.print("   ");
+        System.out.print(space + space); // Пропуск между полями
         printHorizontalCoords();
         System.out.println();
         for (int i = 0; i < SIZE_FIELD; i++) {
             String add_space = (i == SIZE_FIELD - 1) ? " " : "  "; // Для ровного отображения координат по вертикали
             System.out.print((i + 1) + add_space);
             field1.printRow(i);
-            System.out.print(space);
+            System.out.print(space); // Пропуск между полями
             System.out.print((i + 1) + add_space);
             field2.printRow(i);
             System.out.println();
@@ -132,7 +137,8 @@ public class FieldPlaying {
 
     private void printRow(int i) {
         for (int j = 0; j < SIZE_FIELD; j++) {
-            System.out.print(field[i][j] + " ");
+            if (field[i][j].getVisibility() == Visibility.INVISIBLE) System.out.print(Symbol.EmptyField + " ");
+            else System.out.print(field[i][j] + " ");
         }
     }
 
@@ -167,9 +173,30 @@ public class FieldPlaying {
         Symbol symbol;
         Visibility visibility;
 
+        public Cell() {
+            this.symbol = Symbol.EmptyField;
+            this.visibility = Visibility.INVISIBLE;
+        }
+
         public Cell(Symbol symbol) {
             this.symbol = symbol;
             this.visibility = Visibility.INVISIBLE;
+        }
+
+        public Symbol getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(Symbol symbol) {
+            this.symbol = symbol;
+        }
+
+        public Visibility getVisibility() {
+            return visibility;
+        }
+
+        public void setVisibility(Visibility visibility) {
+            this.visibility = visibility;
         }
 
         @Override
@@ -178,8 +205,10 @@ public class FieldPlaying {
         }
     }
 
+    public enum Visibility {
+        VISIBLE,
+        INVISIBLE
+    }
+
 }
-enum Visibility {
-    VISIBLE,
-    INVISIBLE
-}
+

@@ -5,7 +5,7 @@ import FinalProject.Game;
 // TODO Потом нужно будет запилить, сейчас нету
 public class AIPlayer extends Player {
     @Override
-    public void fillYourselfField() {
+    public void fillField() {
 
     }
 
