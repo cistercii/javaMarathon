@@ -108,7 +108,7 @@ public class FieldPlaying {
         printHorizontalCoords();
         System.out.println();
         for (int i = 0; i < SIZE_FIELD; i++) {
-            String add_space = (i == SIZE_FIELD - 1) ? " " : "  ";
+            String add_space = (i == SIZE_FIELD - 1) ? " " : "  "; // Для ровного отображения координат по вертикали
             System.out.print((i + 1) + add_space);
             for (int j = 0; j < SIZE_FIELD; j++) {
                 System.out.print(field[i][j] + " ");
@@ -149,7 +149,7 @@ public class FieldPlaying {
         }
     }
 
-    public static enum Symbol {
+    public enum Symbol {
 
         EmptyField("\u2B1C"),       // Пустое поле
         UnavailableField("\u2B1B"), // Недоступное поле
@@ -159,7 +159,7 @@ public class FieldPlaying {
 
         private final String unicode;
 
-        private Symbol(String unicode) {
+        Symbol(String unicode) {
             this.unicode = unicode;
         }
 
@@ -175,11 +175,6 @@ public class FieldPlaying {
 
         public Cell() {
             this.symbol = Symbol.EmptyField;
-            this.visibility = Visibility.INVISIBLE;
-        }
-
-        public Cell(Symbol symbol) {
-            this.symbol = symbol;
             this.visibility = Visibility.INVISIBLE;
         }
 

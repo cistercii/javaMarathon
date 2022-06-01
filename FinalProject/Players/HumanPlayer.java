@@ -19,7 +19,7 @@ public class HumanPlayer extends Player {
             for (int i = 0; i < ship_group.getCount_ships(); i++) { // По кол-ву кораблей
                 do {
                     getField().print();
-                    System.out.println("Введите координаты корабля (формат x1,y1;...): " + ship_group.getName());
+                    System.out.println("Введите координаты корабля (формат А,1;А,2...): " + ship_group.getName());
                     String str = scan.next();
                     try {
                         getField().addShip(ship_group, str);
@@ -36,7 +36,7 @@ public class HumanPlayer extends Player {
 
     @Override
     public Game.StatusGame oneShot(@NotNull Player opponent) throws BadInputDataException {
-        System.out.println("Ввведите координаты стрельбы (формат: x,y)");
+        System.out.println("Ввведите координаты стрельбы (формат: А,1)");
         Scanner scan = new Scanner(System.in, StandardCharsets.UTF_8);
         Coords shot = new Coords(scan.next());
         Ship ship = opponent.field.findShot(shot);
