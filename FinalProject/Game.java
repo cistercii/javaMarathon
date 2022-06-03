@@ -6,7 +6,6 @@ import FinalProject.Players.Player;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class Game {
 
@@ -22,22 +21,22 @@ public class Game {
         System.out.println("Игрок 1 расставляет корабли");
         player1.fillField();
         System.out.println("Корабли игрока 1 расположены\n");
-        print_next_move();
+        printNextMove();
         System.out.println("Игрок 2 расставляет корабли");
         player2.fillField();
         System.out.println("Корабли игрока 2 расположены\n");
-        print_next_move();
+        printNextMove();
     }
 
-    private int first_move () {
+    private int firstMove() {
         Random random = new Random();
         int first = random.nextInt(2) + 1; // Случайное число 1 или 2
         System.out.println("Определяется кто будет делать первый ход!");
         return first;
     }
 
-    public void game_process () {
-        int current_player_number = first_move();
+    public void gameProcess() {
+        int current_player_number = firstMove();
         int i = 0;
         StatusGame status;
         while (true) {
@@ -72,7 +71,7 @@ public class Game {
         return status;
     }
 
-    private void print_next_move() {
+    private void printNextMove() {
         System.out.println("Для передачи хода нажмите Enter");
         Scanner scan = new Scanner(System.in, StandardCharsets.UTF_8);
         scan.nextLine();

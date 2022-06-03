@@ -55,8 +55,10 @@ public class FieldPlaying {
         Ship ship = new Ship(numberDecks, str_coords);
         for(Coords coords : ship.getCoords_list()) {
             int horizontal_crd = horizontal_coords.indexOf(coords.getHorizontal()); // Правильность координаты проверена ранее
-            if (field[coords.getVertical() - 1][horizontal_crd].getSymbol()
-                    .equals(Symbol.UnavailableField)) throw new BadCoordsException();
+            Symbol symbol = field[coords.getVertical() - 1][horizontal_crd].getSymbol();
+            if (!symbol.equals(Symbol.EmptyField)) {
+                throw new BadCoordsException();
+            }
             addSymbol(coords, Symbol.Ship);
         }
         ships.add(counter_ships++, ship);
