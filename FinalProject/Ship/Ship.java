@@ -30,7 +30,6 @@ public class Ship {
 
     // Проверка на соответствие формату (x1,y1;x2,y2;... и тд)
     private boolean checkStringAndFillCoords(String str) throws BadInputDataException {
-        str = str.replaceAll(" ", "").toUpperCase();
         String [] str_coords = str.split(";");
         if (str_coords.length != size_decks.getSize()) return false;
         for (String one_pair_coords : str_coords) {

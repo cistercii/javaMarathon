@@ -1,8 +1,10 @@
 package FinalProject;
 
 import FinalProject.Exceptions.BadCoordsException;
-import FinalProject.Exceptions.BadFormatException;
 import FinalProject.Exceptions.BadInputDataException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Coords {
 
@@ -12,12 +14,13 @@ public class Coords {
     private final int vertical;
 
     public Coords(String one_pair_coords) throws BadInputDataException {
-        final int COUNT_COORDS = 2;
-        String [] strings = one_pair_coords.toUpperCase().split(",");
-        // Устранение ошибки, которая появилась при тестировании
-        if (strings[0].length() != 1 || strings.length < COUNT_COORDS) throw new BadFormatException();
-        char horizontal = strings[0].charAt(0);
-        int vertical_number = Integer.parseInt(strings[1]);
+        one_pair_coords = one_pair_coords.replaceAll(" ", "").toUpperCase();
+        Pattern pattern = Pattern.compile("([А-ИК]),(10|[1-9])");
+        if (!one_pair_coords.matches(pattern.toString())) throw new BadCoordsException();
+        Matcher matcher = pattern.matcher(one_pair_coords);
+        matcher.find();
+        char horizontal = matcher.group(1).charAt(0);
+        int vertical_number = Integer.parseInt(matcher.group(2));
 
         if (!FieldPlaying.horizontal_coords.contains(horizontal) ||
             vertical_number < MIN_VERTICAL_NUMBER || vertical_number > MAX_VERTICAL_NUMBER) throw new BadCoordsException();
