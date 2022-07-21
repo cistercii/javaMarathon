@@ -48,10 +48,7 @@ public class Game {
             if (status == StatusGame.END_GAME) break;
             current_player_number = current_player_number % 2 + 1;
         }
-        player1.getField().setAllVisible(FieldPlaying.Visibility.VISIBLE);
-        player2.getField().setAllVisible(FieldPlaying.Visibility.VISIBLE);
-        FieldPlaying.doublePrint(player1.getField(), player2.getField());
-        System.out.println("Игра окончена! Игрок " + current_player_number + " победил");
+        printEndGame(current_player_number);
     }
 
     private Game.StatusGame nextMove (int current_player) {
@@ -75,6 +72,13 @@ public class Game {
         System.out.println("Для передачи хода нажмите Enter");
         Scanner scan = new Scanner(System.in, StandardCharsets.UTF_8);
         scan.nextLine();
+    }
+
+    private void printEndGame(int numberWinPlayer ) {
+        player1.getField().setAllVisible(FieldPlaying.Visibility.VISIBLE);
+        player2.getField().setAllVisible(FieldPlaying.Visibility.VISIBLE);
+        FieldPlaying.doublePrint(player1.getField(), player2.getField());
+        System.out.println("Игра окончена! Игрок " + numberWinPlayer + " победил");
     }
 
     public enum StatusGame {
