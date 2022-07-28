@@ -51,8 +51,8 @@ public class Game {
         printEndGame(current_player_number);
     }
 
-    private Game.StatusGame nextMove (int current_player) {
-        Game.StatusGame status;
+    private StatusGame nextMove (int current_player) {
+        StatusGame status;
         do {
             try {
                 if (current_player == 1) {
