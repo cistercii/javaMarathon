@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class FieldPlaying {
 
@@ -56,10 +56,10 @@ public class FieldPlaying {
         for(Coords coords : ship.getCoords_list()) {
             int horizontal_crd = horizontal_coords.indexOf(coords.getHorizontal()); // Правильность координаты проверена ранее
             Symbol symbol = field[coords.getVertical() - 1][horizontal_crd].getSymbol();
-            if (!symbol.equals(Symbol.EmptyField)) {
+            if (!symbol.equals(Symbol.EMPTY_FIELD)) {
                 throw new BadCoordsException();
             }
-            addSymbol(coords, Symbol.Ship);
+            addSymbol(coords, Symbol.SHIP);
         }
         ships.add(counter_ships++, ship);
         addUnavailable(ship);
@@ -85,19 +85,19 @@ public class FieldPlaying {
                 index2 < MIN_VERTICAL_INDEX || index2 > MAX_VERTICAL_INDEX) {
             return;
         }
-        if (field[index1][index2].getSymbol() == Symbol.UnavailableField) {
+        if (field[index1][index2].getSymbol() == Symbol.UNAVAILABLE_FIELD) {
             field[index1][index2].setVisibility(Visibility.VISIBLE);
             return;
         }
-        if (field[index1][index2].getSymbol() != Symbol.EmptyField) return;
-        field[index1][index2].setSymbol(Symbol.UnavailableField);
+        if (field[index1][index2].getSymbol() != Symbol.EMPTY_FIELD) return;
+        field[index1][index2].setSymbol(Symbol.UNAVAILABLE_FIELD);
     }
 
-    public Ship findShot(Coords coords_shot) {
-        List<Ship> target_ships = ships.stream()
-                .filter(x -> x.getCoords_list().contains(coords_shot))
-                .collect(Collectors.toList());
-        return (target_ships.size() != 0) ? target_ships.get(0) : null;
+    public Optional<Ship> findShot(Coords coords_shot) {
+        return  ships.stream()
+                .filter(x -> x.getCoords_list()
+                .contains(coords_shot))
+                .findAny();
     }
 
     public boolean eraseShip(Ship ship) {
@@ -139,7 +139,7 @@ public class FieldPlaying {
 
     private void printRow(int i) {
         for (int j = 0; j < SIZE_FIELD; j++) {
-            if (field[i][j].getVisibility() == Visibility.INVISIBLE) System.out.print(Symbol.EmptyField + " ");
+            if (field[i][j].getVisibility() == Visibility.INVISIBLE) System.out.print(Symbol.EMPTY_FIELD + " ");
             else System.out.print(field[i][j] + " ");
         }
     }
@@ -153,11 +153,11 @@ public class FieldPlaying {
 
     public enum Symbol {
 
-        EmptyField("\u2B1C"),       // Пустое поле
-        UnavailableField("\u2B1B"), // Недоступное поле
-        Ship("\u26F5"),              // Корабль
-        Hit("\uD83D\uDD25"),         // Попадание
-        Miss("\u274C");             // Промах
+        EMPTY_FIELD("\u2B1C"),       // Пустое поле
+        UNAVAILABLE_FIELD("\u2B1B"), // Недоступное поле
+        SHIP("\u26F5"),              // Корабль
+        HIT("\uD83D\uDD25"),         // Попадание
+        MISS("\u274C");             // Промах
 
         private final String unicode;
 
@@ -176,7 +176,7 @@ public class FieldPlaying {
         Visibility visibility;
 
         public Cell() {
-            this.symbol = Symbol.EmptyField;
+            this.symbol = Symbol.EMPTY_FIELD;
             this.visibility = Visibility.INVISIBLE;
         }
 

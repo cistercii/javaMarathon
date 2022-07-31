@@ -39,7 +39,7 @@ public class Ship {
     }
 
     private ShipType definitionShipType() {
-        if (size_decks == SizeDecks.OneDeck) return ShipType.None;
+        if (size_decks == SizeDecks.ONE_DECK) return ShipType.NONE;
         boolean isHorizontal = false;
         boolean isVertical = false;
 
@@ -47,26 +47,26 @@ public class Ship {
             for (int j = i + 1; j < coords_list.size(); j++) {
                 if (coords_list.get(i).getHorizontal() == coords_list.get(j).getHorizontal()) isVertical = true;
                 else if (coords_list.get(i).getVertical() == coords_list.get(j).getVertical()) isHorizontal = true;
-                else return ShipType.None;
-                if (isHorizontal && isVertical) return ShipType.None;
+                else return ShipType.NONE;
+                if (isHorizontal && isVertical) return ShipType.NONE;
             }
         }
-        return isHorizontal ? ShipType.Horizontal : ShipType.Vertical;
+        return isHorizontal ? ShipType.HORIZONTAL : ShipType.VERTICAL;
     }
 
     private boolean isValid() {
-        if (size_decks == SizeDecks.OneDeck) return true;
+        if (size_decks == SizeDecks.ONE_DECK) return true;
 
-        if (type == ShipType.None) return false;
+        if (type == ShipType.NONE) return false;
 
-        Comparator<Coords> comparator = type == ShipType.Horizontal ? Comparator.comparingInt(Coords::getHorizontal) :
+        Comparator<Coords> comparator = type == ShipType.HORIZONTAL ? Comparator.comparingInt(Coords::getHorizontal) :
                                                                       Comparator.comparingInt(Coords::getVertical);
         coords_list = coords_list.stream().sorted(comparator).collect(Collectors.toList());
         return isContinuity();
     }
 
     private boolean isContinuity() {
-        return type == ShipType.Horizontal ? isHorizontalContinuity() : isVerticalContinuity();
+        return type == ShipType.HORIZONTAL ? isHorizontalContinuity() : isVerticalContinuity();
     }
     // Проверяем чтобы координаты были соседними по горизонтали
     private boolean isHorizontalContinuity() {
@@ -82,6 +82,10 @@ public class Ship {
             if (coords_list.get(i).getVertical() != coords_list.get(i + 1).getVertical() - 1) return false;
         }
         return true;
+    }
+
+    public ShipType getType() {
+        return type;
     }
 
     public List<Coords> getCoords_list() {

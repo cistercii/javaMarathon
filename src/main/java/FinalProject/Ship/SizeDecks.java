@@ -1,10 +1,10 @@
 package FinalProject.Ship;
 
 public enum SizeDecks {
-        FourDecks(4, 1, "Четырехпалубный"),
-        ThreeDecks(3, 2, "Трехпалубный"),
-        TwoDecks(2,3, "Двупалубный"),
-        OneDeck(1,4, "Однопалубный");
+        FOUR_DECKS(4, 1, "Четырехпалубный"),
+        THREE_DECKS(3, 2, "Трехпалубный"),
+        TWO_DECKS(2,3, "Двупалубный"),
+        ONE_DECK(1,4, "Однопалубный");
 
         private final int size;
         private final int count_ships;

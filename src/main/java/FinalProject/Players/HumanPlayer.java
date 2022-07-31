@@ -1,7 +1,7 @@
 package FinalProject.Players;
 
 import FinalProject.Coords;
-import FinalProject.Exceptions.BadInputDataException;
+import FinalProject.Exceptions.BadCoordsException;
 import FinalProject.FieldPlaying;
 import FinalProject.Game;
 import FinalProject.Ship.Ship;
@@ -9,6 +9,7 @@ import FinalProject.Ship.SizeDecks;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
@@ -35,21 +36,21 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Game.StatusGame oneShot(@NotNull Player opponent) throws BadInputDataException {
+    public Game.StatusGame oneShot(@NotNull Player opponent) throws BadCoordsException {
         System.out.println("Ввведите координаты стрельбы (формат: А,1)");
         Scanner scan = new Scanner(System.in, StandardCharsets.UTF_8);
         Coords shot = new Coords(scan.next());
-        Ship ship = opponent.field.findShot(shot);
-        if (ship == null) {
-            opponent.field.addSymbol(shot, FieldPlaying.Symbol.Miss);
+        Optional<Ship> ship = opponent.field.findShot(shot);
+        if (ship.isEmpty()) {
+            opponent.field.addSymbol(shot, FieldPlaying.Symbol.MISS);
         } else {
-            ship.hit();
-            opponent.field.addSymbol(shot, FieldPlaying.Symbol.Hit);
+            ship.get().hit();
+            opponent.field.addSymbol(shot, FieldPlaying.Symbol.HIT);
             System.out.println("Попадание!");
-            if (ship.getIntact_decks() == 0) {
+            if (ship.get().getIntact_decks() == 0) {
                 System.out.println("Корабль потоплен!");
-                opponent.getField().addUnavailable(ship);
-                return opponent.field.eraseShip(ship) ? Game.StatusGame.END_GAME : Game.StatusGame.CURRENT_PLAYER_MOVE;
+                opponent.getField().addUnavailable(ship.get());
+                return opponent.field.eraseShip(ship.get()) ? Game.StatusGame.END_GAME : Game.StatusGame.CURRENT_PLAYER_MOVE;
             } else {
                 return Game.StatusGame.CURRENT_PLAYER_MOVE;
             }
