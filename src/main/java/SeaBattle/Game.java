@@ -55,11 +55,7 @@ public class Game {
         StatusGame status;
         do {
             try {
-                if (current_player == 1) {
-                    status = player1.oneShot(player2);
-                } else {
-                    status = player2.oneShot(player1);
-                }
+                status = oneMove(current_player);
             } catch (BadInputDataException e) {
                 System.out.println(e.getMessage());
                 status = StatusGame.ERROR_COORDS;
@@ -79,6 +75,10 @@ public class Game {
         player2.getField().setAllVisible(FieldPlaying.Visibility.VISIBLE);
         FieldPlaying.doublePrint(player1.getField(), player2.getField());
         System.out.println("Игра окончена! Игрок " + numberWinPlayer + " победил");
+    }
+
+    StatusGame oneMove (int current_player) throws BadInputDataException {
+        return (current_player == 1) ? player1.oneShot(player2) : player2.oneShot(player1);
     }
 
     public enum StatusGame {
