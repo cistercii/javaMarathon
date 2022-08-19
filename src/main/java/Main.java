@@ -1,6 +1,6 @@
-import FinalProject.Game;
-import FinalProject.Players.HumanPlayer;
-import FinalProject.Players.Player;
+import SeaBattle.Game;
+import SeaBattle.Players.HumanPlayer;
+import SeaBattle.Players.Player;
 
 import java.io.IOException;
 
